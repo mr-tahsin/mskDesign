@@ -1,3 +1,5 @@
+console.log("Script loaded");
+
 // Sample Data
 const bangladeshiNames = [
   "Aarif Ahmed",
@@ -35,10 +37,10 @@ for (let grade = 1; grade <= 5; grade++) {
     const section = i <= 23 ? "A" : i <= 46 ? "B" : "C";
     const name =
       bangladeshiNames[Math.floor(Math.random() * bangladeshiNames.length)];
-    const totalFees = Math.floor(Math.random() * 5000) + 1000; // Random total fees between 1000 and 6000
-    const lateFees = Math.floor(Math.random() * 500); // Random late fees between 0 and 500
-    const paymentStatus = Math.random() > 0.5 ? "paid" : "due"; // Randomly assign "paid" or "due"
-    const paymentDate = generateRandomDate(); // Random payment date in DD-MM-YYYY format
+    const totalFees = Math.floor(Math.random() * 5000) + 1000;
+    const lateFees = Math.floor(Math.random() * 500);
+    const paymentStatus = Math.random() > 0.5 ? "paid" : "due";
+    const paymentDate = generateRandomDate();
 
     students.push({
       name: name,
@@ -60,6 +62,7 @@ for (let grade = 1; grade <= 5; grade++) {
     });
   }
 }
+console.log("Students generated:", students.length);
 
 // Generate random date in DD-MM-YYYY format
 function generateRandomDate() {
@@ -75,7 +78,12 @@ const studentsPerPage = 20;
 let filteredStudents = students;
 
 function displayStudents() {
-  const tableBody = document.querySelector("#student-fees-table tbody");
+  console.log("Displaying students:", filteredStudents.length);
+  const tableBody = document.querySelector("#fees-table tbody");
+  if (!tableBody) {
+    console.error("Fees table body not found!");
+    return;
+  }
   tableBody.innerHTML = "";
 
   const startIndex = (currentPage - 1) * studentsPerPage;
@@ -98,12 +106,10 @@ function displayStudents() {
     tableBody.appendChild(row);
   });
 
-  // Add event listeners to "View Details" buttons
   document.querySelectorAll(".view-details").forEach((button, index) => {
     button.addEventListener("click", () => openModal(paginatedStudents[index]));
   });
 
-  // Update pagination info
   const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
   document.getElementById(
     "page-info"
@@ -119,7 +125,7 @@ function filterStudents() {
   const toDate = document.getElementById("to-date").value;
   const financialYear = document.getElementById("financial-year").value;
 
-  filteredStudents = students;
+  filteredStudents = students.slice();
 
   if (grade) {
     filteredStudents = filteredStudents.filter(
@@ -148,8 +154,8 @@ function filterStudents() {
   }
   if (financialYear) {
     const [startYear, endYear] = financialYear.split("-");
-    const startDate = new Date(`07-01-${startYear}`);
-    const endDate = new Date(`06-30-${endYear}`);
+    const startDate = new Date(`${startYear}-07-01`);
+    const endDate = new Date(`${endYear}-06-30`);
     filteredStudents = filteredStudents.filter((student) => {
       const paymentDate = new Date(
         student.paymentDate.split("-").reverse().join("-")
@@ -178,17 +184,32 @@ document.getElementById("next-page").addEventListener("click", () => {
   }
 });
 
-// Apply Filters
+// Automatic Filter Application
+document.getElementById("grade").addEventListener("change", filterStudents);
+document.getElementById("section").addEventListener("change", filterStudents);
 document
-  .getElementById("apply-filters")
-  .addEventListener("click", filterStudents);
+  .getElementById("payment-status")
+  .addEventListener("change", filterStudents);
+document.getElementById("from-date").addEventListener("change", filterStudents);
+document.getElementById("to-date").addEventListener("change", filterStudents);
+document
+  .getElementById("financial-year")
+  .addEventListener("change", filterStudents);
+
+// Clear Filters
+document.getElementById("clear-filters").addEventListener("click", () => {
+  document.getElementById("grade").value = "";
+  document.getElementById("section").value = "";
+  document.getElementById("payment-status").value = "";
+  document.getElementById("from-date").value = "";
+  document.getElementById("to-date").value = "";
+  document.getElementById("financial-year").value = "";
+  filterStudents();
+});
 
 // Open Payment Details Modal
 function openModal(student) {
   const modal = document.getElementById("payment-details-modal");
-  const modalContent = modal.querySelector(".modal-content");
-
-  // Populate modal with student data
   document.getElementById("modal-student-name").textContent = student.name;
   document.getElementById("modal-grade").textContent = student.grade;
   document.getElementById("modal-section").textContent = student.section;
@@ -208,7 +229,6 @@ function openModal(student) {
     paymentHistoryBody.appendChild(row);
   });
 
-  // Display modal
   modal.style.display = "flex";
 }
 
@@ -222,4 +242,7 @@ flatpickr("#from-date", { dateFormat: "d-m-Y" });
 flatpickr("#to-date", { dateFormat: "d-m-Y" });
 
 // Initialize
-filterStudents();
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM loaded, initializing...");
+  filterStudents();
+});
