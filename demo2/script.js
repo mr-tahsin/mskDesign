@@ -3,17 +3,17 @@ console.log("Script loaded");
 // Sample Data
 const bangladeshiNames = [
   "Aarif Ahmed",
-  "Bushra Begum",
+  "Bushra Islam",
   "Chowdhury Rahman",
-  "Dalia Akter",
+  "Sanjana Islam",
   "Emon Hasan",
   "Fahima Khan",
   "Golam Mostafa",
-  "Habiba Jahan",
+  "Habibur Rahman",
   "Imran Hossain",
   "Jannatul Ferdous",
   "Kamal Uddin",
-  "Laila Begum",
+  "Laila Islam",
   "Mahmudul Hasan",
   "Nusrat Jahan",
   "Omar Faruk",
@@ -23,7 +23,7 @@ const bangladeshiNames = [
   "Sabrina Ahmed",
   "Tahmina Akter",
   "Uzzal Kumar",
-  "Vaskor Roy",
+  "Vaskor Chowdhury",
   "Wahidul Islam",
   "Yasmin Akter",
   "Zahid Hasan",
@@ -127,12 +127,13 @@ function displayStudents() {
 
 function filterStudents() {
   const grade = document.getElementById("grade").value;
-  const rollSearch = document.getElementById("roll-search").value.trim();
+  const search = document.getElementById("search").value.trim().toLowerCase();
   const section = document.getElementById("section").value;
   const paymentStatus = document.getElementById("payment-status").value;
   const fromDate = document.getElementById("from-date").value;
   const toDate = document.getElementById("to-date").value;
   const financialYear = document.getElementById("financial-year").value;
+  const month = document.getElementById("month").value;
 
   filteredStudents = sortStudentsByDate([...students]);
 
@@ -141,9 +142,11 @@ function filterStudents() {
       (student) => student.grade === grade
     );
   }
-  if (rollSearch) {
-    filteredStudents = filteredStudents.filter((student) =>
-      student.roll.includes(rollSearch)
+  if (search) {
+    filteredStudents = filteredStudents.filter(
+      (student) =>
+        student.roll.includes(search) ||
+        student.name.toLowerCase().includes(search)
     );
   }
   if (section) {
@@ -177,12 +180,16 @@ function filterStudents() {
       return paymentDate >= startDate && paymentDate <= endDate;
     });
   }
+  if (month) {
+    filteredStudents = filteredStudents.filter(
+      (student) => student.paymentDate.split("-")[1] === month
+    );
+  }
 
   currentPage = 1;
   displayStudents();
 }
 
-// Download as Excel
 function downloadExcel() {
   const data = filteredStudents.map((student, index) => ({
     SL: index + 1,
@@ -199,10 +206,9 @@ function downloadExcel() {
   const ws = XLSX.utils.json_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Student Fees");
-  XLSX.writeFile(wb, "msk_student_fees_report.xlsx");
+  XLSX.writeFile(wb, "student_fees_report.xlsx");
 }
 
-// Download as PDF
 function downloadPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
@@ -239,7 +245,7 @@ function downloadPDF() {
     body: tableData,
   });
 
-  doc.save("msk_student_fees_report.pdf");
+  doc.save("student_fees_report.pdf");
 }
 
 document.getElementById("prev-page").addEventListener("click", () => {
@@ -259,9 +265,7 @@ document.getElementById("next-page").addEventListener("click", () => {
 
 // Automatic Filter Application
 document.getElementById("grade").addEventListener("change", filterStudents);
-document
-  .getElementById("roll-search")
-  .addEventListener("input", filterStudents);
+document.getElementById("search").addEventListener("input", filterStudents);
 document.getElementById("section").addEventListener("change", filterStudents);
 document
   .getElementById("payment-status")
@@ -271,19 +275,20 @@ document.getElementById("to-date").addEventListener("change", filterStudents);
 document
   .getElementById("financial-year")
   .addEventListener("change", filterStudents);
+document.getElementById("month").addEventListener("change", filterStudents);
 
 document.getElementById("clear-filters").addEventListener("click", () => {
   document.getElementById("grade").value = "";
-  document.getElementById("roll-search").value = "";
+  document.getElementById("search").value = "";
   document.getElementById("section").value = "";
   document.getElementById("payment-status").value = "";
   document.getElementById("from-date").value = "";
   document.getElementById("to-date").value = "";
   document.getElementById("financial-year").value = "";
+  document.getElementById("month").value = "";
   filterStudents();
 });
 
-// Export Button Listeners
 document
   .getElementById("download-excel")
   .addEventListener("click", downloadExcel);

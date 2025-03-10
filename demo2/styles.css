@@ -6,7 +6,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  font-size: 14px; /* Base font size reduced slightly */
+  font-size: 14px;
 }
 
 header {
@@ -51,7 +51,7 @@ main {
 .filter-row {
   display: flex;
   flex-wrap: nowrap;
-  gap: 8px; /* Reduced gap for compactness */
+  gap: 6px; /* Reduced from 8px to fit more elements */
   justify-content: space-between;
 }
 
@@ -59,20 +59,14 @@ main {
   margin-top: 10px;
   text-align: center;
 }
-#clear-filters {
-  background-color: red;
-  border-radius: 10px;
-  color: white;
-  border: 2px solid green;
-}
 
 .filters select,
 .filters input,
 .filters button {
-  padding: 6px; /* Reduced padding */
+  padding: 5px; /* Reduced from 6px */
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 13px; /* Slightly smaller font for filters */
+  font-size: 12px; /* Reduced from 13px */
   flex: 1;
   min-width: 0;
 }
@@ -80,105 +74,64 @@ main {
 table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* Ensures table stays within width */
+  table-layout: fixed;
 }
 
 table th,
 table td {
-  padding: 8px; /* Reduced padding for compactness */
+  padding: 8px;
   border: 1px solid #ddd;
   text-align: left;
-  word-wrap: break-word; /* Full data wraps */
-  white-space: normal; /* Allows wrapping */
-  font-size: 13px; /* Reduced font size for table */
+  word-wrap: break-word;
+  white-space: normal;
+  font-size: 13px;
 }
 
-/* Header background */
 table th {
   background: #f4f4f4;
 }
 
-/* Column widths totaling 100% */
 table th:nth-child(1),
 table td:nth-child(1) {
   width: 5%;
-} /* SL */
+}
 table th:nth-child(2),
 table td:nth-child(2) {
   width: 10%;
-} /* Student Roll */
+}
 table th:nth-child(3),
 table td:nth-child(3) {
   width: 22%;
-} /* Student Name - wider for full data */
+}
 table th:nth-child(4),
 table td:nth-child(4) {
   width: 8%;
-} /* Grade */
+}
 table th:nth-child(5),
 table td:nth-child(5) {
   width: 8%;
-} /* Section */
+}
 table th:nth-child(6),
 table td:nth-child(6) {
   width: 10%;
-} /* Total Fees */
+}
 table th:nth-child(7),
 table td:nth-child(7) {
   width: 10%;
-} /* Late Fees */
+}
 table th:nth-child(8),
 table td:nth-child(8) {
   width: 10%;
-} /* Payment Status */
+}
 table th:nth-child(9),
 table td:nth-child(9) {
   width: 10%;
-} /* Payment Date */
+}
 table th:nth-child(10),
 table td:nth-child(10) {
   width: 7%;
-} /* Actions */
-
-/* Modal styles */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
 }
 
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  width: 80%;
-  max-width: 600px;
-  font-size: 13px; /* Consistent with table */
-}
-
-.close {
-  float: right;
-  cursor: pointer;
-}
-
-.pagination {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.pagination button {
-  padding: 8px 16px; /* Slightly smaller buttons */
-  margin: 0 5px;
-  font-size: 13px;
-}
-
-/* Add this to your existing styles.css */
 .export-buttons {
   margin-bottom: 15px;
   display: flex;
@@ -199,37 +152,81 @@ table td:nth-child(10) {
   background: #45a049;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 600px;
+  font-size: 13px;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  font-size: 13px;
+}
+
+#clear-filters {
+  background-color: red;
+  border-radius: 10px;
+  color: white;
+  border: 2px solid green;
+}
+
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .filter-row {
-    flex-wrap: wrap; /* Wrap filters on small screens */
+    flex-wrap: wrap;
     gap: 5px;
   }
   .filters select,
   .filters input,
   .filters button {
-    font-size: 12px; /* Smaller font on tablets/phones */
-    padding: 5px;
+    font-size: 11px;
+    padding: 4px;
   }
   table th,
   table td {
-    font-size: 12px; /* Smaller font for table */
+    font-size: 12px;
     padding: 6px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .filter-row {
-    flex-direction: column; /* Stack filters on very small screens */
+    flex-direction: column;
   }
   .filters select,
   .filters input,
   .filters button {
-    width: 100%; /* Full width on phones */
+    width: 100%;
   }
   table th,
   table td {
-    font-size: 11px; /* Even smaller for tiny screens */
+    font-size: 11px;
     padding: 4px;
   }
 }

@@ -39,7 +39,7 @@
             <option value="4">Grade 4</option>
             <option value="5">Grade 5</option>
           </select>
-          <input type="text" id="roll-search" placeholder="Search Roll" />
+          <input type="text" id="search" placeholder="Search Roll or Name" />
           <select id="section">
             <option value="">Select Section</option>
             <option value="A">Section A</option>
@@ -55,9 +55,24 @@
           <input type="text" id="to-date" placeholder="To Date" />
           <select id="financial-year">
             <option value="">Financial Year</option>
-            <option value="2023-2024">2023-2024 (Jul-Jun)</option>
-            <option value="2024-2025">2024-2025 (Jul-Jun)</option>
-            <option value="2025-2026">2025-2026 (Jul-Jun)</option>
+            <option value="2023-2024">2023-2024</option>
+            <option value="2024-2025">2024-2025</option>
+            <option value="2025-2026">2025-2026</option>
+          </select>
+          <select id="month">
+            <option value="">Select Month</option>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
           </select>
         </div>
         <div class="clear-row">
@@ -84,7 +99,7 @@
               <th>Late Fees</th>
               <th>Payment Status</th>
               <th>Payment Date</th>
-              <th>Actions</th>
+              <th>Payment Details</th>
             </tr>
           </thead>
           <tbody>
@@ -126,7 +141,7 @@
       </div>
     </main>
 
-    <!-- CDNs for Flatpickr, SheetJS, and jsPDF -->
+    <!-- CDNs -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
