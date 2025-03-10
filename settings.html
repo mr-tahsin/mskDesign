@@ -1,0 +1,35 @@
+<!-- Settings Page (settings.html) -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="content">
+      <h2>Settings</h2>
+      <form>
+        <div class="mb-3">
+          <label for="schoolYear" class="form-label">Financial Year</label>
+          <select class="form-select" id="schoolYear">
+            <option value="2023-2024">July 2023 - June 2024</option>
+            <option value="2024-2025">July 2024 - June 2025</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="currency" class="form-label">Currency</label>
+          <select class="form-select" id="currency">
+            <option value="BDT">BDT (৳)</option>
+            <option value="USD">USD ($)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+      </form>
+    </div>
+  </body>
+</html>

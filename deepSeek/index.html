@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School LMS - Student Fees</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="logo">School LMS</div>
+      <div class="user-profile">
+        <span>Admin</span>
+        <button>Logout</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Student Fees Page -->
+      <section id="student-fees">
+        <h2>Student Fees</h2>
+        <!-- Filters -->
+        <div class="filters">
+          <select id="grade">
+            <option value="">Select Grade</option>
+            <option value="1">Grade 1</option>
+            <option value="2">Grade 2</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+          </select>
+          <select id="section">
+            <option value="">Select Section</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+            <option value="C">Section C</option>
+          </select>
+          <select id="payment-status">
+            <option value="">Payment Status</option>
+            <option value="paid">Paid</option>
+            <option value="due">Due</option>
+          </select>
+          <input type="text" id="from-date" placeholder="From Date" />
+          <input type="text" id="to-date" placeholder="To Date" />
+          <select id="financial-year">
+            <option value="">Financial Year</option>
+            <option value="2023-2023">2023-2023</option>
+            <option value="2024-2024">2024-2024</option>
+            <option value="2025-2025">2025-2025</option>
+          </select>
+          <button id="apply-filters">Apply Filters</button>
+        </div>
+        <!-- Table -->
+        <table id="student-fees-table">
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Student Name</th>
+              <th>Grade</th>
+              <th>Section</th>
+              <th>Total Fees</th>
+              <th>Late Fees</th>
+              <th>Payment Status</th>
+              <th>Payment Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Data will be populated by JavaScript -->
+          </tbody>
+        </table>
+        <!-- Pagination -->
+        <div class="pagination">
+          <button id="prev-page">Previous</button>
+          <span id="page-info"></span>
+          <button id="next-page">Next</button>
+        </div>
+      </section>
+
+      <!-- Payment Details Modal -->
+      <div id="payment-details-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h3>Payment Details</h3>
+          <p><strong>Student:</strong> <span id="modal-student-name"></span></p>
+          <p><strong>Grade:</strong> <span id="modal-grade"></span></p>
+          <p><strong>Section:</strong> <span id="modal-section"></span></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Payment Type</th>
+                <th>Amount Paid</th>
+                <th>Due Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="modal-payment-history">
+              <!-- Data will be populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
