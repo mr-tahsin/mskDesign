@@ -30,8 +30,8 @@ const bangladeshiNames = [
 ];
 
 const students = [];
+let rollCounter = 6345;
 
-// Generate 70 students per grade (1 to 5) with sections (A, B, C)
 for (let grade = 1; grade <= 5; grade++) {
   for (let i = 1; i <= 70; i++) {
     const section = i <= 23 ? "A" : i <= 46 ? "B" : "C";
@@ -41,8 +41,10 @@ for (let grade = 1; grade <= 5; grade++) {
     const lateFees = Math.floor(Math.random() * 500);
     const paymentStatus = Math.random() > 0.5 ? "paid" : "due";
     const paymentDate = generateRandomDate();
+    const roll = rollCounter++;
 
     students.push({
+      roll: roll.toString(),
       name: name,
       grade: grade.toString(),
       section: section,
@@ -64,7 +66,6 @@ for (let grade = 1; grade <= 5; grade++) {
 }
 console.log("Students generated:", students.length);
 
-// Generate random date in DD-MM-YYYY format
 function generateRandomDate() {
   const year = [2023, 2024, 2025][Math.floor(Math.random() * 3)];
   const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, "0");
@@ -72,19 +73,17 @@ function generateRandomDate() {
   return `${day}-${month}-${year}`;
 }
 
-// Sort students by paymentDate (latest first)
 function sortStudentsByDate(studentsArray) {
   return studentsArray.sort((a, b) => {
     const dateA = new Date(a.paymentDate.split("-").reverse().join("-"));
     const dateB = new Date(b.paymentDate.split("-").reverse().join("-"));
-    return dateB - dateA; // Descending order (latest first)
+    return dateB - dateA;
   });
 }
 
-// Pagination
 let currentPage = 1;
 const studentsPerPage = 20;
-let filteredStudents = sortStudentsByDate([...students]); // Initialize with sorted data
+let filteredStudents = sortStudentsByDate([...students]);
 
 function displayStudents() {
   console.log("Displaying students:", filteredStudents.length);
@@ -103,6 +102,7 @@ function displayStudents() {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${startIndex + index + 1}</td>
+      <td>${student.roll}</td>
       <td>${student.name}</td>
       <td>${student.grade}</td>
       <td>${student.section}</td>
@@ -125,20 +125,25 @@ function displayStudents() {
   ).textContent = `Page ${currentPage} of ${totalPages}`;
 }
 
-// Filter Students
 function filterStudents() {
   const grade = document.getElementById("grade").value;
+  const rollSearch = document.getElementById("roll-search").value.trim();
   const section = document.getElementById("section").value;
   const paymentStatus = document.getElementById("payment-status").value;
   const fromDate = document.getElementById("from-date").value;
   const toDate = document.getElementById("to-date").value;
   const financialYear = document.getElementById("financial-year").value;
 
-  filteredStudents = sortStudentsByDate([...students]); // Start with sorted full list
+  filteredStudents = sortStudentsByDate([...students]);
 
   if (grade) {
     filteredStudents = filteredStudents.filter(
       (student) => student.grade === grade
+    );
+  }
+  if (rollSearch) {
+    filteredStudents = filteredStudents.filter((student) =>
+      student.roll.includes(rollSearch)
     );
   }
   if (section) {
@@ -177,7 +182,66 @@ function filterStudents() {
   displayStudents();
 }
 
-// Pagination Buttons
+// Download as Excel
+function downloadExcel() {
+  const data = filteredStudents.map((student, index) => ({
+    SL: index + 1,
+    "Student Roll": student.roll,
+    "Student Name": student.name,
+    Grade: student.grade,
+    Section: student.section,
+    "Total Fees": student.totalFees,
+    "Late Fees": student.lateFees,
+    "Payment Status": student.paymentStatus,
+    "Payment Date": student.paymentDate,
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(data);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Student Fees");
+  XLSX.writeFile(wb, "msk_student_fees_report.xlsx");
+}
+
+// Download as PDF
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.text("Student Fees Report", 14, 10);
+
+  const tableData = filteredStudents.map((student, index) => [
+    index + 1,
+    student.roll,
+    student.name,
+    student.grade,
+    student.section,
+    student.totalFees,
+    student.lateFees,
+    student.paymentStatus,
+    student.paymentDate,
+  ]);
+
+  doc.autoTable({
+    startY: 20,
+    head: [
+      [
+        "SL",
+        "Student Roll",
+        "Student Name",
+        "Grade",
+        "Section",
+        "Total Fees",
+        "Late Fees",
+        "Payment Status",
+        "Payment Date",
+      ],
+    ],
+    body: tableData,
+  });
+
+  doc.save("msk_student_fees_report.pdf");
+}
+
 document.getElementById("prev-page").addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
@@ -195,6 +259,9 @@ document.getElementById("next-page").addEventListener("click", () => {
 
 // Automatic Filter Application
 document.getElementById("grade").addEventListener("change", filterStudents);
+document
+  .getElementById("roll-search")
+  .addEventListener("input", filterStudents);
 document.getElementById("section").addEventListener("change", filterStudents);
 document
   .getElementById("payment-status")
@@ -205,9 +272,9 @@ document
   .getElementById("financial-year")
   .addEventListener("change", filterStudents);
 
-// Clear Filters
 document.getElementById("clear-filters").addEventListener("click", () => {
   document.getElementById("grade").value = "";
+  document.getElementById("roll-search").value = "";
   document.getElementById("section").value = "";
   document.getElementById("payment-status").value = "";
   document.getElementById("from-date").value = "";
@@ -216,10 +283,16 @@ document.getElementById("clear-filters").addEventListener("click", () => {
   filterStudents();
 });
 
-// Open Payment Details Modal
+// Export Button Listeners
+document
+  .getElementById("download-excel")
+  .addEventListener("click", downloadExcel);
+document.getElementById("download-pdf").addEventListener("click", downloadPDF);
+
 function openModal(student) {
   const modal = document.getElementById("payment-details-modal");
   document.getElementById("modal-student-name").textContent = student.name;
+  document.getElementById("modal-roll").textContent = student.roll;
   document.getElementById("modal-grade").textContent = student.grade;
   document.getElementById("modal-section").textContent = student.section;
 
@@ -241,18 +314,15 @@ function openModal(student) {
   modal.style.display = "flex";
 }
 
-// Close Payment Details Modal
 document.querySelector(".close").addEventListener("click", () => {
   document.getElementById("payment-details-modal").style.display = "none";
 });
 
-// Initialize Flatpickr for date inputs
 flatpickr("#from-date", { dateFormat: "d-m-Y" });
 flatpickr("#to-date", { dateFormat: "d-m-Y" });
 
-// Initialize
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM loaded, initializing...");
-  filteredStudents = sortStudentsByDate([...students]); // Sort on load
-  displayStudents(); // Show latest 20 rows immediately
+  filteredStudents = sortStudentsByDate([...students]);
+  displayStudents();
 });

@@ -30,43 +30,53 @@
     <main>
       <!-- Filters -->
       <div class="filters">
-        <select id="grade">
-          <option value="">Select Grade</option>
-          <option value="1">Grade 1</option>
-          <option value="2">Grade 2</option>
-          <option value="3">Grade 3</option>
-          <option value="4">Grade 4</option>
-          <option value="5">Grade 5</option>
-        </select>
-        <select id="section">
-          <option value="">Select Section</option>
-          <option value="A">Section A</option>
-          <option value="B">Section B</option>
-          <option value="C">Section C</option>
-        </select>
-        <select id="payment-status">
-          <option value="">Payment Status</option>
-          <option value="paid">Paid</option>
-          <option value="due">Due</option>
-        </select>
-        <input type="text" id="from-date" placeholder="From Date" />
-        <input type="text" id="to-date" placeholder="To Date" />
-        <select id="financial-year">
-          <option value="">Financial Year</option>
-          <option value="2023-2024">2023-2024</option>
-          <option value="2024-2025">2024-2025</option>
-          <option value="2025-2026">2025-2026</option>
-        </select>
-        <button id="clear-filters">Clear Filters</button>
+        <div class="filter-row">
+          <select id="grade">
+            <option value="">Select Grade</option>
+            <option value="1">Grade 1</option>
+            <option value="2">Grade 2</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+          </select>
+          <input type="text" id="roll-search" placeholder="Search Roll" />
+          <select id="section">
+            <option value="">Select Section</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+            <option value="C">Section C</option>
+          </select>
+          <select id="payment-status">
+            <option value="">Payment Status</option>
+            <option value="paid">Paid</option>
+            <option value="due">Due</option>
+          </select>
+          <input type="text" id="from-date" placeholder="From Date" />
+          <input type="text" id="to-date" placeholder="To Date" />
+          <select id="financial-year">
+            <option value="">Financial Year</option>
+            <option value="2023-2024">2023-2024 (Jul-Jun)</option>
+            <option value="2024-2025">2024-2025 (Jul-Jun)</option>
+            <option value="2025-2026">2025-2026 (Jul-Jun)</option>
+          </select>
+        </div>
+        <div class="clear-row">
+          <button id="clear-filters">Clear Filters</button>
+        </div>
       </div>
 
       <!-- Student Fees Table -->
       <section id="student-fees">
         <h2>Student Fees</h2>
+        <div class="export-buttons">
+          <button id="download-excel">Download as Excel</button>
+          <button id="download-pdf">Download as PDF</button>
+        </div>
         <table id="fees-table">
           <thead>
             <tr>
               <th>SL</th>
+              <th>Student Roll</th>
               <th>Student Name</th>
               <th>Grade</th>
               <th>Section</th>
@@ -95,6 +105,7 @@
           <span class="close">×</span>
           <h3>Payment Details</h3>
           <p><strong>Student:</strong> <span id="modal-student-name"></span></p>
+          <p><strong>Roll:</strong> <span id="modal-roll"></span></p>
           <p><strong>Grade:</strong> <span id="modal-grade"></span></p>
           <p><strong>Section:</strong> <span id="modal-section"></span></p>
           <table>
@@ -115,7 +126,11 @@
       </div>
     </main>
 
+    <!-- CDNs for Flatpickr, SheetJS, and jsPDF -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
