@@ -72,10 +72,19 @@ function generateRandomDate() {
   return `${day}-${month}-${year}`;
 }
 
+// Sort students by paymentDate (latest first)
+function sortStudentsByDate(studentsArray) {
+  return studentsArray.sort((a, b) => {
+    const dateA = new Date(a.paymentDate.split("-").reverse().join("-"));
+    const dateB = new Date(b.paymentDate.split("-").reverse().join("-"));
+    return dateB - dateA; // Descending order (latest first)
+  });
+}
+
 // Pagination
 let currentPage = 1;
 const studentsPerPage = 20;
-let filteredStudents = students;
+let filteredStudents = sortStudentsByDate([...students]); // Initialize with sorted data
 
 function displayStudents() {
   console.log("Displaying students:", filteredStudents.length);
@@ -125,7 +134,7 @@ function filterStudents() {
   const toDate = document.getElementById("to-date").value;
   const financialYear = document.getElementById("financial-year").value;
 
-  filteredStudents = students.slice();
+  filteredStudents = sortStudentsByDate([...students]); // Start with sorted full list
 
   if (grade) {
     filteredStudents = filteredStudents.filter(
@@ -244,5 +253,6 @@ flatpickr("#to-date", { dateFormat: "d-m-Y" });
 // Initialize
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM loaded, initializing...");
-  filterStudents();
+  filteredStudents = sortStudentsByDate([...students]); // Sort on load
+  displayStudents(); // Show latest 20 rows immediately
 });
