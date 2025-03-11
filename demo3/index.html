@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MSK - Student Fees</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" media="all" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="../img/logo/school_logo.png"
+          alt="School Logo"
+          class="img-fluid"
+        />
+      </div>
+      <div class="user-profile">
+        <span>Admin</span>
+        <button>Logout</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="filters">
+        <div class="filter-row">
+          <select id="grade">
+            <option value="">Select Grade</option>
+            <option value="1">Grade 1</option>
+            <option value="2">Grade 2</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+          </select>
+          <select id="financial-year">
+            <option value="">Financial Year</option>
+            <option value="2024-2025">2024-2025</option>
+            <option value="2025-2026">2025-2026</option>
+          </select>
+          <button id="clear-filters">Clear Filters</button>
+        </div>
+      </div>
+
+      <section id="student-fees">
+        <h2>Student Fees</h2>
+        <div class="export-buttons">
+          <button id="download-excel">Download as Excel</button>
+          <button id="download-pdf">Download as PDF</button>
+        </div>
+        <table id="fees-table">
+          <thead>
+            <tr>
+              <th rowspan="2">SL</th>
+              <th rowspan="2">Name</th>
+              <th rowspan="2">Section</th>
+              <th rowspan="2">Monthly Tuition Fee</th>
+              <th rowspan="2">Previous Due</th>
+              <th colspan="6">2024</th>
+              <th colspan="6">2025</th>
+              <th rowspan="2">Total Paid</th>
+              <th rowspan="2">Late Fees</th>
+              <th rowspan="2">Total Due</th>
+              <th rowspan="2">Student Details</th>
+            </tr>
+            <tr>
+              <th>Jul</th>
+              <th>Aug</th>
+              <th>Sept</th>
+              <th>Oct</th>
+              <th>Nov</th>
+              <th>Dec</th>
+              <th>Jan</th>
+              <th>Feb</th>
+              <th>Mar</th>
+              <th>Apr</th>
+              <th>May</th>
+              <th>Jun</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="pagination">
+          <button id="prev-page">Previous</button>
+          <span id="page-info"></span>
+          <button id="next-page">Next</button>
+        </div>
+      </section>
+
+      <div id="payment-details-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">×</span>
+          <h3>Student Details</h3>
+          <img src="../img/avatar.PNG" alt="" id="modal-student-img" />
+          <p><strong>Student:</strong> <span id="modal-student-name"></span></p>
+          <p><strong>Grade:</strong> <span id="modal-grade"></span></p>
+          <p><strong>Section:</strong> <span id="modal-section"></span></p>
+          <p>
+            <strong>Father Name:</strong>
+            <span id="modal-section-father"></span>
+          </p>
+          <p>
+            <strong>Mother Name:</strong>
+            <span id="modal-section-mother"></span>
+          </p>
+          <table>
+            <tbody id="modal-payment-history"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
