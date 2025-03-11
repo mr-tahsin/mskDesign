@@ -43,7 +43,23 @@
 
       <section id="student-fees">
         <h2>Student Fees</h2>
-        <div class="export-buttons">
+        <p
+          style="
+            background-color: rgb(192, 255, 2);
+            display: inline;
+            font-weight: bold;
+          "
+        >
+          <code>
+            <strong>To-do list:</strong> <br />1. Initially there will be no
+            data, once filter the Grade and Financial Year from button, the
+            table data will be populate.<br />2. July to June place will be
+            empty. Once process, the monthly salary will be appear. <br />3.
+            Once student pays and payment status become "P", Total Monthly Paid
+            data will be visible.
+          </code>
+        </p>
+        <div class="export-buttons" style="margin-top: 20px">
           <button id="download-excel">Download as Excel</button>
           <button id="download-pdf">Download as PDF</button>
         </div>
@@ -51,14 +67,13 @@
           <thead>
             <tr>
               <th rowspan="2">SL</th>
+              <th rowspan="2">Student Roll</th>
               <th rowspan="2">Name</th>
               <th rowspan="2">Section</th>
-              <th rowspan="2">Monthly Tuition Fee</th>
-              <th rowspan="2">Previous Due</th>
               <th colspan="6">2024</th>
               <th colspan="6">2025</th>
-              <th rowspan="2">Total Paid</th>
-              <th rowspan="2">Late Fees</th>
+              <th rowspan="2">Total Monthly Paid</th>
+              <th rowspan="2">Total Late Fees</th>
               <th rowspan="2">Total Due</th>
               <th rowspan="2">Student Details</th>
             </tr>

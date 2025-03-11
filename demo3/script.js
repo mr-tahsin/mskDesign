@@ -123,10 +123,9 @@ function displayStudents() {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${startIndex + index + 1}</td>
+      <td>${student.monthlyFee}</td>
       <td>${student.name}</td>
       <td>${student.section}</td>
-      <td>${student.monthlyFee}</td>
-      <td>${student.previousDue}</td>
       <td>${student.payments2024.jul}</td>
       <td>${student.payments2024.aug}</td>
       <td>${student.payments2024.sept}</td>
